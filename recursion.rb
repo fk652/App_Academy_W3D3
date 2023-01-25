@@ -127,3 +127,35 @@ p bsearch([1, 2, 3], 1) # => 0
 p bsearch([2, 3, 4, 5], 3) # => 1
 p bsearch([2, 4, 6, 8, 10], 6) # => 2
 p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+
+
+def merge_sort(array)
+  return array if array.length <= 1
+  mid_index = ((array.length - 1)/ 2.0).round
+  left = array[0...mid_index]
+  right = array[mid_index..-1]
+  left = merge_sort(left)
+  right = merge_sort(right)
+  merge_helper(left, right)
+end
+
+def merge_helper(left, right)
+  final_length = left.length + right.length
+  sorted = []
+  until sorted.length == final_length
+    if left.length == 0 && right.length > 0
+      sorted += right
+      return sorted
+    elsif right.length == 0 && left.length > 0
+      sorted += left
+      return sorted
+    elsif left[0] <= right[0]
+      sorted << left.shift
+    elsif left[0] > right[0]
+      sorted << right.shift 
+    end
+  end
+  sorted
+end
+
+p merge_sort([1,6,2,9,0,23])
